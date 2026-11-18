@@ -173,4 +173,15 @@ int main()
     {
         std::cout << d_text[i];
     }
+
+    //save token rules
+    std::ofstream savefile("tokenizer.txt");
+    std::cout<<"m size "<<mergeidx.size()<<'\n';
+for (const auto& pair : mergeidx) {
+    savefile << pair.first << " + "
+             << pair.second << " = "
+             << mergeRules.at(pair) << '\n';
+}
+
+savefile.close();
 }

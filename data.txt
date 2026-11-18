@@ -1,1 +1,15 @@
-hello keshav, how are you?
+so the tokenizer failed cuz the data was very small i guess
+so im writing this so maybe this works
+hello world hello world hello world
+hello hello hello hello hello
+banana banana banana banana
+apple apple apple apple
+machine learning machine learning
+artificial intelligence artificial intelligence
+transformer transformer transformer
+attention attention attention
+hello world hello world hello world
+banana apple banana apple
+machine learning is fun
+machine learning is fun
+machine learning is fun
