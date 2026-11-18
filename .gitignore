@@ -1,0 +1,79 @@
+
+# =========================
+# C++ Compiled Files
+# =========================
+*.exe
+*.out
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+*.pdb
+*.ilk
+*.exp
+*.idb
+
+# =========================
+# Build Directories
+# =========================
+build/
+Build/
+Debug/
+Release/
+x64/
+x86/
+bin/
+obj/
+out/
+
+# =========================
+# VS Code
+# =========================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/c_cpp_properties.json
+
+# =========================
+# Visual Studio
+# =========================
+.vs/
+*.sln.docstates
+*.VC.db
+*.VC.opendb
+*.suo
+*.user
+*.userosscache
+*.sdf
+*.ipch
+ipch/
+
+# =========================
+# CUDA
+# =========================
+*.cubin
+*.fatbin
+*.ptx
+*.cudafe*
+*.ptxas*
+*.gpu
+*.ncu-rep
+*.nsys-rep
+*.qdrep
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.temp
+*.log
+*.bak
+*.swp
+*.swo
+*~
+Thumbs.db
+.DS_Store
