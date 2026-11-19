@@ -4,17 +4,25 @@
 #include <string>
 #include <map>
 #include <utility>
+#include <random>
+#include "tokenizer.h"
 
 using namespace std;
 
-std::map<std::pair<int, int>, int> mergeRules;
-std::vector<std::pair<int, int>> mergeidx;
 
-void pairing(vector<int> &tokens)
+
+int bpe(vector<int> &tokens,
+std::map<std::pair<int, int>, int>& mergeRules,
+std::vector<std::pair<int, int>>& mergeidx,int vocab_limit)
 {
     std::map<std::pair<int, int>, int> counts;
-    for (size_t r = 0; r < 5; r++)
-    {
+
+    int r = 0;
+    
+    while (true)
+    {   
+        int limit =256+r;
+        if(limit> vocab_limit && vocab_limit!=0)break;
         if (tokens.size() < 2)
             break;
 
@@ -41,7 +49,10 @@ void pairing(vector<int> &tokens)
             }
         }
         if (maxcount < 2)
+        {
+
             break;
+        }
         mergeRules[bestPair] = m_id;
         mergeidx.push_back(bestPair);
         // merging
@@ -66,10 +77,14 @@ void pairing(vector<int> &tokens)
         }
 
         tokens = merged;
+        r++;
+        
     }
+    std::cout<<"vocab size"<< 256+r<<'\n';
+    return 256+r;
 }
 
-void encode(std::vector<int> &tokens)
+void encode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRules,std::vector<std::pair<int, int>>& mergeidx)
 {
     for (int m = 0; m < mergeidx.size(); m++)
     {
@@ -99,7 +114,7 @@ void encode(std::vector<int> &tokens)
     }
 }
 
-void decode(std::vector<int> &tokens)
+void decode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRules,std::vector<std::pair<int, int>>& mergeidx)
 {
     for (int m = static_cast<int>(mergeidx.size()) - 1; m >= 0; m--)
     {
@@ -126,15 +141,30 @@ void decode(std::vector<int> &tokens)
         tokens = dmerge;
     }
 }
-int main()
-{
 
-    ifstream file("data.txt", std::ios::binary);
+
+void save_tokenizer(std::map<std::pair<int, int>, int>& mergeRules,
+std::vector<std::pair<int, int>>& mergeidx){
+    std::ofstream savefile("tokenizer.txt");
+  
+    for (const auto &pair : mergeidx)
+    {
+        savefile << pair.first << " + "
+                 << pair.second << " = "
+                 << mergeRules.at(pair) << '\n';
+    }
+
+    savefile.close();
+}
+
+void get_tokens(std::vector<int>& tokens){
+tokens.clear();
+ ifstream file("data.txt", std::ios::binary);
 
     if (!file.is_open())
     {
         printf("failed to open files \n");
-        return 1;
+        return ;
     }
     string text;
     string line;
@@ -145,43 +175,12 @@ int main()
         text += '\n';
     }
 
-    vector<int> tokens;
+   
     for (size_t i = 0; i < text.size(); i++)
     {
         int id = static_cast<unsigned char>(text[i]);
         tokens.push_back(id);
     }
-    for (size_t i = 0; i < text.size(); i++)
-    {
-        std::cout << text[i];
-    }
-    pairing(tokens);
-    encode(tokens);
-    for (size_t i = 0; i < tokens.size(); i++)
-    {
-        std::cout << tokens[i] << '\n';
-    }
-    std::cout << "decoded \n";
-    decode(tokens);
-
-    std::string d_text = "";
-    for (int id : tokens)
-    {
-        d_text += static_cast<char>(id);
-    }
-    for (size_t i = 0; i < d_text.size(); i++)
-    {
-        std::cout << d_text[i];
-    }
-
-    //save token rules
-    std::ofstream savefile("tokenizer.txt");
-    std::cout<<"m size "<<mergeidx.size()<<'\n';
-for (const auto& pair : mergeidx) {
-    savefile << pair.first << " + "
-             << pair.second << " = "
-             << mergeRules.at(pair) << '\n';
 }
 
-savefile.close();
-}
+
