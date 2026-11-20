@@ -6,6 +6,7 @@
 #include <utility>
 #include <random>
 #include "tokenizer.h"
+#include "transformer.h"
 
 std::map<std::pair<int, int>, int> mergeRules;
 std::vector<std::pair<int, int>> mergeidx;
@@ -14,12 +15,18 @@ std::vector<float> table;
 
 int main()
 {
-
+ int vocab_size=0;
     get_tokens(tokens);
 
-    int vocab_size =bpe(tokens, mergeRules, mergeidx);
+    if(!loadtokenizer(mergeRules,mergeidx)){
 
-    save_tokenizer(mergeRules,mergeidx);
+         vocab_size =bpe(tokens, mergeRules, mergeidx);
+    }else{
+       vocab_size= encode(tokens,mergeRules,mergeidx);
+    }
+
+    initilize_embeddings(table,8,vocab_size);
+
 
     
 }

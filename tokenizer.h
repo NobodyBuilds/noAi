@@ -8,7 +8,7 @@
  inline void save_tokenizer(std::map<std::pair<int, int>, int>& mergeRules,
 std::vector<std::pair<int, int>>& mergeidx);
 
-inline void encode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRules,std::vector<std::pair<int, int>>& mergeidx);
+inline int encode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRules,std::vector<std::pair<int, int>>& mergeidx);
 
 inline void decode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRules,std::vector<std::pair<int, int>>& mergeidx);
 

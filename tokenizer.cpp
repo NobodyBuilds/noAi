@@ -15,6 +15,9 @@ int bpe(vector<int> &tokens,
 std::map<std::pair<int, int>, int>& mergeRules,
 std::vector<std::pair<int, int>>& mergeidx,int vocab_limit)
 {
+    mergeRules.clear();
+    mergeidx.clear();
+
     std::map<std::pair<int, int>, int> counts;
 
     int r = 0;
@@ -84,10 +87,11 @@ std::vector<std::pair<int, int>>& mergeidx,int vocab_limit)
     return 256+r;
 }
 
-void encode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRules,std::vector<std::pair<int, int>>& mergeidx)
+int encode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRules,std::vector<std::pair<int, int>>& mergeidx)
 {
+    int vs=256;
     for (int m = 0; m < mergeidx.size(); m++)
-    {
+    {   
         std::pair<int, int> m_pair = {mergeidx[m].first, mergeidx[m].second};
 
         std::vector<int> merged;
@@ -104,6 +108,7 @@ void encode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRu
                 int id = mergeRules.at({a, b});
                 merged.push_back(id);
                 i++;
+                if(id>vs)vs=id;
             }
             else
             {
@@ -112,6 +117,8 @@ void encode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRu
         }
         tokens = merged;
     }
+    return vs;
+
 }
 
 void decode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRules,std::vector<std::pair<int, int>>& mergeidx)
