@@ -26,7 +26,8 @@ int main()
     }
 
     initilize_embeddings(table,8,vocab_size);
-
+    std::vector<float>output;
+   embedding(tokens,table,output,8);
 
     
 }
