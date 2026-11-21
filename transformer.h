@@ -8,7 +8,5 @@ inline bool loadtokenizer(std::map<std::pair<int, int>, int>& mergeRules,std::ve
 
 
 
-inline void embedding(const std::vector<int> &tokens, const std::vector<float> &table, std::vector<float> &output, int dim);
+inline void embeddings(std::vector<int> &tokens, std::vector<float> &output, int dim, int vocab_size);
 
-
-inline void initilize_embeddings(std::vector<float>& table,int dim,int vocab_size);

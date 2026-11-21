@@ -11,7 +11,7 @@
 std::map<std::pair<int, int>, int> mergeRules;
 std::vector<std::pair<int, int>> mergeidx;
 std::vector<int> tokens;
-std::vector<float> table;
+std::vector<float>output_embeddings;
 
 int main()
 {
@@ -25,9 +25,8 @@ int main()
        vocab_size= encode(tokens,mergeRules,mergeidx);
     }
 
-    initilize_embeddings(table,8,vocab_size);
-    std::vector<float>output;
-   embedding(tokens,table,output,8);
+   embeddings(tokens,output_embeddings,8,vocab_size);
+  
 
-    
+   
 }

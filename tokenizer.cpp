@@ -5,7 +5,6 @@
 #include <map>
 #include <utility>
 #include <random>
-#include "tokenizer.h"
 
 using namespace std;
 
@@ -84,12 +83,12 @@ std::vector<std::pair<int, int>>& mergeidx,int vocab_limit)
         
     }
     std::cout<<"vocab size"<< 256+r<<'\n';
-    return 256+r;
+    return 256+mergeidx.size();
 }
 
 int encode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRules,std::vector<std::pair<int, int>>& mergeidx)
 {
-    int vs=256;
+   
     for (int m = 0; m < mergeidx.size(); m++)
     {   
         std::pair<int, int> m_pair = {mergeidx[m].first, mergeidx[m].second};
@@ -108,7 +107,7 @@ int encode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRul
                 int id = mergeRules.at({a, b});
                 merged.push_back(id);
                 i++;
-                if(id>vs)vs=id;
+               
             }
             else
             {
@@ -117,7 +116,7 @@ int encode(std::vector<int> &tokens,std::map<std::pair<int, int>, int>& mergeRul
         }
         tokens = merged;
     }
-    return vs;
+    return 256+mergeidx.size();
 
 }
 
